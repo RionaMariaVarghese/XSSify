@@ -9,6 +9,7 @@ class IndexPage(QWidget):
         chapters_list = ["TUTORIAL", "LEVELS", "HELP", "PROFILE"]
 
         vlayout = QVBoxLayout(self)
+        vlayout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         path = "/home/mario/Project/XSSify/XSSify/arrow-narrow-right-svgrepo-com.png"
 
         # Adding icon and indices to layout
@@ -17,12 +18,11 @@ class IndexPage(QWidget):
             
             hlayout = QHBoxLayout()
             hlayout.addWidget(arrow_icon)
-            
             label = QLabel(chapter)
             label.setStyleSheet("font-size: 40px; letter-spacing: 10px; font-weight: bold;")
             hlayout.addWidget(label)
+            hlayout.setAlignment(Qt.AlignmentFlag.AlignLeft)
             
-            hlayout.setAlignment(Qt.AlignmentFlag.AlignCenter)
             vlayout.addLayout(hlayout)
 
 # Function to create arrow icon
@@ -37,4 +37,3 @@ class ArrowIcon(QWidget):
 
         layout = QVBoxLayout(self)
         layout.addWidget(label)
-        layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
