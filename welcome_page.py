@@ -1,5 +1,3 @@
-# landing_page.py
-
 from PyQt6.QtWidgets import QWidget, QLabel, QVBoxLayout
 from PyQt6.QtCore import Qt
 
@@ -7,17 +5,17 @@ class WelcomePage(QWidget):
     def __init__(self):
         super().__init__()
 
+        # Content and layout
         combined_text = '''
-        <span style='font-size: 150px; color: white; font-style: bold;'>
+        <span style='font-size: 150px; color: white; font-weight: bold;'>
             WELCOME!
         </span>
         <br>
-        <span style='font-size: 50px; color: #2DD096; font-style: bold;'>
+        <span style='font-size: 50px; color: #2DD096; font-weight: bold;'>
            XSSify
         </span>
         '''
 
-        # QLabel with HTML-formatted text
         text_label = QLabel(combined_text)
         text_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
