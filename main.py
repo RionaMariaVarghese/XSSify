@@ -1,7 +1,7 @@
 import sys
 from PyQt6.QtWidgets import QApplication, QMainWindow
 from PyQt6.QtCore import Qt, QTimer
-from PyQt6.QtGui import QFont, QColor
+from PyQt6.QtGui import QFont, QColor, QIcon
 from welcome_page import WelcomePage
 from index_page import IndexPage
 
@@ -14,6 +14,8 @@ class MainWindow(QMainWindow):
 
         # App window title and icon
         self.setWindowTitle("XSSify")
+        icon_path = "/home/mario/Project/XSSify/XSSify/icons/bug.png"
+        self.setWindowIcon(QIcon(icon_path))
 
         # Setting default font
         app_font = QFont("JetBrains Mono")
