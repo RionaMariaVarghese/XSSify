@@ -1,7 +1,9 @@
-from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QScrollArea, QHBoxLayout
-from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QScrollArea, QHBoxLayout, QPushButton
+from PyQt6.QtCore import Qt, pyqtSignal
 
 class HelpPage(QWidget):
+    navigateToIndex = pyqtSignal()
+
     def __init__(self):
         super().__init__()
 
@@ -12,10 +14,11 @@ class HelpPage(QWidget):
         top_layout.setAlignment(Qt.AlignmentFlag.AlignLeft)
         layout.addLayout(top_layout)
 
-        hamburger_icon = QLabel("☰")
-        hamburger_icon.setStyleSheet("font-size: 30px; color: #2DD096; margin-left: 50px;")
+        self.hamburger_icon = QPushButton('\u2630', self)
+        self.hamburger_icon.setStyleSheet("border: none; font-size: 30px; color: #2DD096; margin-left: 50px;")
+        self.hamburger_icon.clicked.connect(self.show_menu)
 
-        top_layout.addWidget(hamburger_icon)
+        top_layout.addWidget(self.hamburger_icon)
         top_layout.addSpacing(30)
 
         help_label = QLabel("HELP")
@@ -63,10 +66,12 @@ class HelpPage(QWidget):
         paragraph_label.setTextFormat(Qt.TextFormat.RichText)
         paragraph_label.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
 
-        # Iterate over specific words and make them bold
         for word in ["Tutorials", "Levels", "Tutorials", "Levels"]:
             text = text.replace(word, f"<em>{word}</em>")
 
         paragraph_label.setText(text)
 
         parent_layout.addWidget(paragraph_label, alignment=Qt.AlignmentFlag.AlignTop)
+
+    def show_menu(self):
+        self.navigateToIndex.emit()

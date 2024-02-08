@@ -7,11 +7,8 @@ class IndexPage(QWidget):
 
     def __init__(self):
         super().__init__()
-
-
-
         chapters_list = ["TUTORIAL", "LEVELS", "HELP", "PROFILE"]
-        path = "/home/mario/Project/XSSify/XSSify/icons/right_arrow.png"
+        path = "/home/mario/Project/SECURIX/XSSify/XSSify/icons/right_arrow.png"
 
         vlayout = QVBoxLayout(self)
         vlayout.setAlignment(Qt.AlignmentFlag.AlignCenter)
