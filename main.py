@@ -1,5 +1,5 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QMainWindow
+from PyQt6.QtWidgets import QApplication, QMainWindow, QStackedWidget
 from PyQt6.QtCore import Qt, QTimer
 from PyQt6.QtGui import QFont, QColor, QIcon
 from welcome_page import WelcomePage
@@ -32,17 +32,30 @@ class MainWindow(QMainWindow):
         p.setColor(self.backgroundRole(), main_window_color)
         self.setPalette(p)
 
+        # Stacking pages
+        self.stacked_widget = QStackedWidget(self)
+        self.setCentralWidget(self.stacked_widget)
+
         # Timer for welcome page
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.show_index_page)
         self.timer.start(2500)
 
         # Create instances of pages
-        self.index_page = IndexPage()
-        self.tutorial_page = TutorialPage()
-        self.levels_page = LevelsPage()
-        self.help_page = HelpPage()
-        self.profile_page = ProfilePage()
+        self.index_page = IndexPage(self.stacked_widget)
+        self.tutorial_page = TutorialPage(self.stacked_widget)
+        self.levels_page = LevelsPage(self.stacked_widget)
+        self.help_page = HelpPage(self.stacked_widget)
+        self.profile_page = ProfilePage(self.stacked_widget)
+
+        # Add pages to QStackedWidget
+        self.stacked_widget.addWidget(self.index_page)
+        self.stacked_widget.addWidget(self.tutorial_page)
+        self.stacked_widget.addWidget(self.levels_page)
+        self.stacked_widget.addWidget(self.help_page)
+        self.stacked_widget.addWidget(self.profile_page)
+
+        self.stacked_widget.setCurrentIndex(0)
 
         # Connect the signal for navigation
         self.index_page.navigateToPage.connect(self.show_specific_page)
