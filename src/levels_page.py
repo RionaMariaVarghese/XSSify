@@ -75,26 +75,19 @@ class Levels(QMainWindow):
                 selected_option_text = self.radio_buttons[i].text().strip().lower()
                 break
 
-        # print("Selected Option Text:", selected_option_text)  # Debugging statement
-
         correct_answer = self.questions[self.question_index]["answer"].strip().lower()
-
-        # print("Correct Answer:", correct_answer)  # Debugging statement
 
         if selected_option_text is not None:
             if selected_option_text == correct_answer:
                 self.score += 1
-                QMessageBox.information(self, "Correct answer")
+                QMessageBox.information(self, "MCQAnswer", "Correct answer")
 
         if typed_answer.lower() == correct_answer:
             self.score += 1
-            QMessageBox.information(self, "Correct answer")
+            QMessageBox.information(self, "TAnswer", "Correct answer")
 
-        else:
-            QMessageBox.information(self, "Incorrect answer")
-
-
-        # print("User Input:", typed_answer)  # Debugging Statement
+        if selected_option_text != correct_answer and typed_answer.lower() != correct_answer:
+            QMessageBox.information(self, "Answer", "Incorrect answer")
 
         self.question_index += 1
         self.show_question()
