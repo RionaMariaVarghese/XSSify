@@ -31,14 +31,14 @@ class Levels(QMainWindow):
         self.label_question = QLabel()
         self.layout.addWidget(self.label_question)
 
-        # Add radio buttons for multiple-choice questions
+        # Radio buttons for MCQs
         self.radio_buttons = []
         for i in range(4):
             radio_button = QRadioButton()
             self.radio_buttons.append(radio_button)
             self.layout.addWidget(radio_button)
 
-        # Add line edit for written answers
+        # Line edit for typed ans
         self.answer_field = QLineEdit()
         self.layout.addWidget(self.answer_field)
 
