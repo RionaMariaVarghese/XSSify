@@ -7,6 +7,9 @@ class IndexPage(QWidget):
 
     def __init__(self):
         super().__init__()
+        self.setup_layout()
+    
+    def setup_layout(self):
         chapters_list = ["TUTORIAL", "LEVELS", "HELP", "PROFILE"]
         path = "/home/mario/Project/SECURIX/XSSify/XSSify/icons/right_arrow.png"
 

@@ -31,11 +31,7 @@ class MainWindow(QMainWindow):
         p = self.palette()
         p.setColor(self.backgroundRole(), main_window_color)
         self.setPalette(p)
-
-        # Stacking pages
-        # self.stacked_widget = QStackedWidget(self)
-        # self.setCentralWidget(self.stacked_widget)
-
+        
         # Timer for welcome page
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.show_index_page)
@@ -47,15 +43,6 @@ class MainWindow(QMainWindow):
         self.levels_page = LevelsPage()
         self.help_page = HelpPage()
         self.profile_page = ProfilePage()
-
-        # Add pages to QStackedWidget
-        # self.stacked_widget.addWidget(self.index_page)
-        # self.stacked_widget.addWidget(self.tutorial_page)
-        # self.stacked_widget.addWidget(self.levels_page)
-        # self.stacked_widget.addWidget(self.help_page)
-        # self.stacked_widget.addWidget(self.profile_page)
-
-        # self.stacked_widget.setCurrentIndex(0)
 
         # Connect the signal for navigation
         self.index_page.navigateToPage.connect(self.show_specific_page)

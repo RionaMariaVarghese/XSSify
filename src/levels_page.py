@@ -1,8 +1,9 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QPushButton, QLabel, QLineEdit, QMessageBox, QRadioButton
+from PyQt6.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QPushButton, QLabel, QLineEdit, QMessageBox, QRadioButton
 from firebase_level import get_data_from_firestore
+from index_page import IndexPage
 
-class Levels(QMainWindow):
+class LevelsPage(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Levels")
@@ -18,6 +19,8 @@ class Levels(QMainWindow):
         self.setup_ui()
         self.show_question()
 
+        self.index_page = IndexPage()
+        
     def load_questions(self):
         self.questions = get_data_from_firestore()
 
@@ -42,9 +45,16 @@ class Levels(QMainWindow):
         self.answer_field = QLineEdit()
         self.layout.addWidget(self.answer_field)
 
+        # Button to submit ans
         self.btn_submit = QPushButton("Submit")
         self.btn_submit.clicked.connect(self.next_question)
         self.layout.addWidget(self.btn_submit)
+
+        # Button to return to Index after questions finish
+        self.btn_return = QPushButton("Return to Index Page")
+        self.btn_return.clicked.connect(self.return_to_index)
+        self.btn_return.hide()
+        self.layout.addWidget(self.btn_return)
 
     def show_question(self):
         if self.question_index < len(self.questions):
@@ -92,17 +102,10 @@ class Levels(QMainWindow):
         self.question_index += 1
         self.show_question()
 
+    def return_to_index(self):
+        self.setCentralWidget(self.index_page)
 
     def show_result(self):
         result_msg = f"Your score: {self.score}/{len(self.questions)}"
         QMessageBox.information(self, "Quiz Finished", result_msg)
-        self.close()
-
-def main():
-    app = QApplication(sys.argv)
-    quiz_app = Levels()
-    quiz_app.show()
-    sys.exit(app.exec())
-
-if __name__ == "__main__":
-    main()
+        self.btn_return.show()
