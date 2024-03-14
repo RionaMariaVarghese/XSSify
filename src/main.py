@@ -1,6 +1,6 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QMainWindow
-from PyQt6.QtCore import Qt, QTimer
+from PyQt6.QtWidgets import QApplication, QMainWindow, QStackedWidget
+from PyQt6.QtCore import QTimer, pyqtSignal
 from PyQt6.QtGui import QFont, QColor, QIcon
 from welcome_page import WelcomePage
 from index_page import IndexPage
@@ -10,6 +10,8 @@ from help_page import HelpPage
 from profile_page import ProfilePage
 
 class MainWindow(QMainWindow):
+    navigateToPage = pyqtSignal(str)
+
     def __init__(self):
         super().__init__()
 
@@ -31,7 +33,7 @@ class MainWindow(QMainWindow):
         p = self.palette()
         p.setColor(self.backgroundRole(), main_window_color)
         self.setPalette(p)
-        
+
         # Timer for welcome page
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.show_index_page)
@@ -44,24 +46,34 @@ class MainWindow(QMainWindow):
         self.help_page = HelpPage()
         self.profile_page = ProfilePage()
 
-        # Connect the signal for navigation
-        self.index_page.navigateToPage.connect(self.show_specific_page)
+        # Add pages to stacked widget
+        self.stackedWidget = QStackedWidget()
+        self.stackedWidget.addWidget(self.index_page)
+        self.stackedWidget.addWidget(self.tutorial_page)
+        self.stackedWidget.addWidget(self.levels_page)
+        self.stackedWidget.addWidget(self.help_page)
+        self.stackedWidget.addWidget(self.profile_page)
+        self.setCentralWidget(self.stackedWidget)
+
+        # Connect signals
+        self.index_page.navigateToPage.connect(self.navigate_to_page)
+        self.tutorial_page.returnToIndexSignal.connect(self.show_index_page)
+        self.levels_page.returnToIndexSignal.connect(self.show_index_page)
 
     def show_index_page(self):
         self.timer.stop()
-        self.setCentralWidget(self.index_page)
+        self.stackedWidget.setCurrentWidget(self.index_page)
 
-    def show_specific_page(self, page_name):
+    def navigate_to_page(self, page_name):
         if page_name == "TUTORIAL":
-            self.setCentralWidget(self.tutorial_page)
-        if page_name == "LEVELS":
-            self.setCentralWidget(self.levels_page)
-        if page_name == "HELP":
-            self.setCentralWidget(self.help_page)
-        if page_name == "PROFILE":
-            self.setCentralWidget(self.profile_page)
+            self.stackedWidget.setCurrentWidget(self.tutorial_page)
+        elif page_name == "LEVELS":
+            self.stackedWidget.setCurrentWidget(self.levels_page)
+        elif page_name == "HELP":
+            self.stackedWidget.setCurrentWidget(self.help_page)
+        elif page_name == "PROFILE":
+            self.stackedWidget.setCurrentWidget(self.profile_page)
 
-    # Centering contents
     def center_window(self):
         screen_geo = QApplication.primaryScreen().geometry()
         x = (screen_geo.width() - self.width()) // 2
