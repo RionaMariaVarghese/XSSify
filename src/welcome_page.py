@@ -8,11 +8,11 @@ class WelcomePage(QWidget):
         # Content and layout
         combined_text = '''
         <span style='font-size: 150px; color: white; font-weight: bold;'>
-            WELCOME!
+            XSSify
         </span>
         <br>
         <span style='font-size: 50px; color: #2DD096; font-weight: bold;'>
-           XSSify
+           Beginner's Guide to XSS Exploitation
         </span>
         '''
 

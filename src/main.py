@@ -37,7 +37,7 @@ class MainWindow(QMainWindow):
         # Timer for welcome page
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.show_index_page)
-        self.timer.start(2500)
+        self.timer.start(5000)
 
         # Create instances of pages
         self.index_page = IndexPage()
@@ -59,6 +59,8 @@ class MainWindow(QMainWindow):
         self.index_page.navigateToPage.connect(self.navigate_to_page)
         self.tutorial_page.returnToIndexSignal.connect(self.show_index_page)
         self.levels_page.returnToIndexSignal.connect(self.show_index_page)
+        self.help_page.returnToIndexSignal.connect(self.show_index_page)
+        self.profile_page.returnToIndexSignal.connect(self.show_index_page)
 
     def show_index_page(self):
         self.timer.stop()

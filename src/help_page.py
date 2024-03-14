@@ -1,8 +1,9 @@
-from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QScrollArea, QHBoxLayout, QPushButton
-from PyQt6.QtCore import Qt, pyqtSignal
+import sys
+from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QScrollArea
+from PyQt6.QtCore import pyqtSignal, Qt
 
 class HelpPage(QWidget):
-    navigateToIndex = pyqtSignal()
+    returnToIndexSignal = pyqtSignal()
 
     def __init__(self):
         super().__init__()
@@ -14,11 +15,17 @@ class HelpPage(QWidget):
         top_layout.setAlignment(Qt.AlignmentFlag.AlignLeft)
         layout.addLayout(top_layout)
 
-        self.hamburger_icon = QPushButton('\u2630', self)
-        self.hamburger_icon.setStyleSheet("border: none; font-size: 30px; color: #2DD096; margin-left: 50px;")
-        self.hamburger_icon.clicked.connect(self.show_menu)
+        # self.hamburger_icon = QPushButton('\u2630', self)
+        # self.hamburger_icon.setStyleSheet("border: none; font-size: 30px; color: #2DD096; margin-left: 50px;")
+        # self.hamburger_icon.clicked.connect(self.show_menu)
 
-        top_layout.addWidget(self.hamburger_icon)
+        self.index_button = QPushButton("☰")
+        self.index_button.clicked.connect(self.emit_return_to_index_signal)
+        layout.addWidget(self.index_button)
+        layout.setAlignment(Qt.AlignmentFlag.AlignLeft)
+
+        # top_layout.addWidget(self.hamburger_icon)
+        top_layout.addWidget(self.index_button)
         top_layout.addSpacing(30)
 
         help_label = QLabel("HELP")
@@ -73,5 +80,8 @@ class HelpPage(QWidget):
 
         parent_layout.addWidget(paragraph_label, alignment=Qt.AlignmentFlag.AlignTop)
 
-    def show_menu(self):
-        self.navigateToIndex.emit()
+    # def show_menu(self):
+    #     self.navigateToIndex.emit()
+
+    def emit_return_to_index_signal(self):
+        self.returnToIndexSignal.emit()
