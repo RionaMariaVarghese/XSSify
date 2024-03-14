@@ -49,6 +49,7 @@ class TutorialPage(QWidget):
     def setup_index_button(self, layout):
         index_button = QPushButton("☰")
         index_button.clicked.connect(self.emit_return_to_index_signal)
+        index_button.setStyleSheet("font-size: 15px; color: #2DD096;")
         layout.addWidget(index_button)
         layout.setAlignment(Qt.AlignmentFlag.AlignLeft)
 

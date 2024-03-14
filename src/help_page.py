@@ -20,6 +20,7 @@ class HelpPage(QWidget):
         # self.hamburger_icon.clicked.connect(self.show_menu)
 
         self.index_button = QPushButton("☰")
+        self.index_button.setStyleSheet("font-size: 15px; color: #2DD096;")
         self.index_button.clicked.connect(self.emit_return_to_index_signal)
         layout.addWidget(self.index_button)
         layout.setAlignment(Qt.AlignmentFlag.AlignLeft)

@@ -23,15 +23,15 @@ class WelcomePage(QWidget):
         layout = QVBoxLayout(self)
         layout.addWidget(text_label)
 
-        # layout.setContentsMargins(50, 50, 50, 50)
+        layout.setContentsMargins(50, 50, 50, 50)
 
-        arrow_button = QPushButton("▼")
-        arrow_button.setStyleSheet("font-size: 20px; color: #2DD096;")
+        layout.setSpacing(0)
+
+        arrow_button = QPushButton("Begin  ▶︎")
+        arrow_button.setStyleSheet("font-size: 15px; color: #2DD096;")
         arrow_button.clicked.connect(self.emit_navigate_to_index_signal)
         arrow_layout = QHBoxLayout()
-        arrow_layout.addStretch()
         arrow_layout.addWidget(arrow_button, alignment=Qt.AlignmentFlag.AlignCenter)
-        arrow_layout.addStretch()
         layout.addLayout(arrow_layout)
 
     def emit_navigate_to_index_signal(self):

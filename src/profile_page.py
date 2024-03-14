@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton
+from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QHBoxLayout
 from PyQt6.QtCore import pyqtSignal, Qt
 
 class ProfilePage(QWidget):
@@ -8,13 +8,18 @@ class ProfilePage(QWidget):
         super().__init__()
 
         layout = QVBoxLayout(self)
-        label = QLabel("This is the Tutorials Page")
-        layout.addWidget(label)
 
-        # Button to return to index page
-        btn_return = QPushButton("Return to Index Page")
+        ham_layout = QHBoxLayout()
+        layout.addLayout(ham_layout)
+
+        btn_return = QPushButton("☰")
         btn_return.clicked.connect(self.emit_return_to_index_signal)
-        layout.addWidget(btn_return)
+        btn_return.setStyleSheet("font-size: 15px; color: #2DD096;")
+        ham_layout.addWidget(btn_return)
+        ham_layout.addStretch()
+
+        label = QLabel("This is the Profile Page")
+        layout.addWidget(label)
 
         self.setLayout(layout)
 
