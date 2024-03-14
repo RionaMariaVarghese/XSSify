@@ -1,6 +1,6 @@
 import sys
 from PyQt6.QtWidgets import QApplication, QMainWindow, QStackedWidget
-from PyQt6.QtCore import QTimer, pyqtSignal
+from PyQt6.QtCore import pyqtSignal
 from PyQt6.QtGui import QFont, QColor, QIcon
 from welcome_page import WelcomePage
 from index_page import IndexPage
@@ -34,12 +34,8 @@ class MainWindow(QMainWindow):
         p.setColor(self.backgroundRole(), main_window_color)
         self.setPalette(p)
 
-        # Timer for welcome page
-        self.timer = QTimer(self)
-        self.timer.timeout.connect(self.show_index_page)
-        self.timer.start(5000)
-
         # Create instances of pages
+        self.welcome_page = WelcomePage()
         self.index_page = IndexPage()
         self.tutorial_page = TutorialPage()
         self.levels_page = LevelsPage()
@@ -48,6 +44,7 @@ class MainWindow(QMainWindow):
 
         # Add pages to stacked widget
         self.stackedWidget = QStackedWidget()
+        self.stackedWidget.addWidget(self.welcome_page)
         self.stackedWidget.addWidget(self.index_page)
         self.stackedWidget.addWidget(self.tutorial_page)
         self.stackedWidget.addWidget(self.levels_page)
@@ -56,6 +53,7 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.stackedWidget)
 
         # Connect signals
+        self.welcome_page.returnToIndexSignal.connect(self.show_index_page)
         self.index_page.navigateToPage.connect(self.navigate_to_page)
         self.tutorial_page.returnToIndexSignal.connect(self.show_index_page)
         self.levels_page.returnToIndexSignal.connect(self.show_index_page)
@@ -63,7 +61,6 @@ class MainWindow(QMainWindow):
         self.profile_page.returnToIndexSignal.connect(self.show_index_page)
 
     def show_index_page(self):
-        self.timer.stop()
         self.stackedWidget.setCurrentWidget(self.index_page)
 
     def navigate_to_page(self, page_name):
