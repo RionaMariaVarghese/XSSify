@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QHBoxLayout, QApplication
+from PyQt6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QHBoxLayout, QLabel
 from PyQt6.QtGui import QPixmap
 from PyQt6.QtCore import Qt, pyqtSignal
 
@@ -10,7 +10,7 @@ class IndexPage(QWidget):
         self.setup_layout()
     
     def setup_layout(self):
-        chapters_list = ["TUTORIAL", "LEVELS", "HELP", "PROFILE"]
+        chapters_list = ["TUTORIAL", "LEVELS", "HELP"]
         path = "/home/mario/Project/SECURIX/XSSify/XSSify/icons/right_arrow.png"
 
         vlayout = QVBoxLayout(self)
@@ -18,12 +18,35 @@ class IndexPage(QWidget):
 
         for chapter in chapters_list:
             arrow_icon = ArrowIcon(path, icon_size=(50, 50))
-            label = ClickableLabel(chapter, self.navigateToPage.emit)
-            label.setStyleSheet("font-size: 40px; letter-spacing: 10px; font-weight: bold;")
+            button = QPushButton(chapter)
+            button.clicked.connect(lambda _, ch=chapter: self.navigateToPage.emit(ch))
+            button.setStyleSheet("""
+                QPushButton {
+                    font-size: 30px;
+                    letter-spacing: 10px;
+                    font-weight: bold;
+                    background-color: rgba(0, 0, 0, 0);
+                    border: 1px solid #FFFFFF;
+                    color: #2DD096;
+                    padding: 20px 40px;
+                    border-radius: 10px;
+                    margin: 6px;
+                }
+                
+                QPushButton:hover {
+                    background-color: rgba(255, 255, 255, 0.1);
+                }
+                
+                QPushButton:pressed {
+                    background-color: rgba(255, 255, 255, 0.2);
+                }
+                """
+            )
+
 
             hlayout = QHBoxLayout()
             hlayout.addWidget(arrow_icon)
-            hlayout.addWidget(label)
+            hlayout.addWidget(button)
             hlayout.setAlignment(Qt.AlignmentFlag.AlignLeft)
 
             vlayout.addLayout(hlayout)
@@ -37,21 +60,3 @@ class ArrowIcon(QWidget):
 
         layout = QVBoxLayout(self)
         layout.addWidget(label)
-
-class ClickableLabel(QLabel):
-    def __init__(self, label_name='', callback=None, parent=None):
-        super().__init__(label_name, parent)
-        self.callback = callback
-
-    def enterEvent(self, event):
-        # Set underlined style when mouse enters
-        self.setStyleSheet("text-decoration: underline; font-size: 40px; letter-spacing: 10px; font-weight: bold;")
-        QApplication.setOverrideCursor(Qt.CursorShape.PointingHandCursor)
-
-    def leaveEvent(self, event):
-        # Reset style when mouse leaves
-        self.setStyleSheet("text-decoration: none; font-size: 40px; letter-spacing: 10px; font-weight: bold;")
-
-    def mousePressEvent(self, event):
-        if self.callback:
-            self.callback(self.text())

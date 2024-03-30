@@ -10,22 +10,33 @@ class HelpPage(QWidget):
 
         layout = QVBoxLayout(self)
 
-        # Create a horizontal layout for the hamburger menu and label
         top_layout = QHBoxLayout()
         top_layout.setAlignment(Qt.AlignmentFlag.AlignLeft)
         layout.addLayout(top_layout)
 
-        # self.hamburger_icon = QPushButton('\u2630', self)
-        # self.hamburger_icon.setStyleSheet("border: none; font-size: 30px; color: #2DD096; margin-left: 50px;")
-        # self.hamburger_icon.clicked.connect(self.show_menu)
-
         self.index_button = QPushButton("☰")
-        self.index_button.setStyleSheet("font-size: 15px; color: #2DD096;")
+        self.index_button.setStyleSheet("""
+                                        QPushButton {
+                                            font-size: 25px;
+                                            background-color: rgba(0, 0, 0, 0);
+                                            color: #2DD096;
+                                            padding: 2px 25px;
+                                            border-radius: 5px;
+                                        }
+                                        
+                                        QPushButton:hover {
+                                            background-color: rgba(255, 255, 255, 0.1);
+                                        }
+                                        
+                                        QPushButton:pressed {
+                                            background-color: rgba(255, 255, 255, 0.2);
+                                        }
+            """
+        )
         self.index_button.clicked.connect(self.emit_return_to_index_signal)
         layout.addWidget(self.index_button)
         layout.setAlignment(Qt.AlignmentFlag.AlignLeft)
 
-        # top_layout.addWidget(self.hamburger_icon)
         top_layout.addWidget(self.index_button)
         top_layout.addSpacing(30)
 
@@ -33,7 +44,6 @@ class HelpPage(QWidget):
         help_label.setStyleSheet("font-size: 40px; letter-spacing: 10px; font-weight: bold;")
         top_layout.addWidget(help_label)
 
-        # Scroll Area
         scroll_area = QScrollArea(self)
         scroll_area.setStyleSheet("border: none; background-color: #252839;")
         layout.addWidget(scroll_area)
@@ -80,9 +90,6 @@ class HelpPage(QWidget):
         paragraph_label.setText(text)
 
         parent_layout.addWidget(paragraph_label, alignment=Qt.AlignmentFlag.AlignTop)
-
-    # def show_menu(self):
-    #     self.navigateToIndex.emit()
 
     def emit_return_to_index_signal(self):
         self.returnToIndexSignal.emit()

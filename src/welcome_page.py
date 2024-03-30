@@ -28,7 +28,31 @@ class WelcomePage(QWidget):
         layout.setSpacing(0)
 
         arrow_button = QPushButton("Begin  ▶︎")
-        arrow_button.setStyleSheet("font-size: 15px; color: #2DD096;")
+        arrow_button.setStyleSheet(
+            """
+                QPushButton {
+                    font-size: 20px;
+                    letter-spacing: 5px;
+                    font-weight: bold;
+                    background-color: rgba(0, 0, 0, 0);
+                    border: 1px solid #FFFFFF;
+                    color: #2DD096;
+                    padding: 10px 20px;
+                    border-radius: 10px;
+                    margin: 2px;
+                }
+                
+                QPushButton:hover {
+                    background-color: rgba(255, 255, 255, 0.1);
+                    border: 2px solid #FFFFFF;
+                }
+                
+                QPushButton:pressed {
+                    background-color: rgba(255, 255, 255, 0.2);
+                    border: 2px solid #FFFFFF;
+                }
+            """
+        )
         arrow_button.clicked.connect(self.emit_navigate_to_index_signal)
         arrow_layout = QHBoxLayout()
         arrow_layout.addWidget(arrow_button, alignment=Qt.AlignmentFlag.AlignCenter)

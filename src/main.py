@@ -7,7 +7,6 @@ from index_page import IndexPage
 from tutorial_page import TutorialPage
 from levels_page import LevelsPage
 from help_page import HelpPage
-from profile_page import ProfilePage
 
 class MainWindow(QMainWindow):
     navigateToPage = pyqtSignal(str)
@@ -40,7 +39,6 @@ class MainWindow(QMainWindow):
         self.tutorial_page = TutorialPage()
         self.levels_page = LevelsPage()
         self.help_page = HelpPage()
-        self.profile_page = ProfilePage()
 
         # Add pages to stacked widget
         self.stackedWidget = QStackedWidget()
@@ -49,7 +47,6 @@ class MainWindow(QMainWindow):
         self.stackedWidget.addWidget(self.tutorial_page)
         self.stackedWidget.addWidget(self.levels_page)
         self.stackedWidget.addWidget(self.help_page)
-        self.stackedWidget.addWidget(self.profile_page)
         self.setCentralWidget(self.stackedWidget)
 
         # Connect signals
@@ -58,7 +55,6 @@ class MainWindow(QMainWindow):
         self.tutorial_page.returnToIndexSignal.connect(self.show_index_page)
         self.levels_page.returnToIndexSignal.connect(self.show_index_page)
         self.help_page.returnToIndexSignal.connect(self.show_index_page)
-        self.profile_page.returnToIndexSignal.connect(self.show_index_page)
 
     def show_index_page(self):
         self.stackedWidget.setCurrentWidget(self.index_page)
@@ -70,8 +66,6 @@ class MainWindow(QMainWindow):
             self.stackedWidget.setCurrentWidget(self.levels_page)
         elif page_name == "HELP":
             self.stackedWidget.setCurrentWidget(self.help_page)
-        elif page_name == "PROFILE":
-            self.stackedWidget.setCurrentWidget(self.profile_page)
 
     def center_window(self):
         screen_geo = QApplication.primaryScreen().geometry()
