@@ -7,6 +7,7 @@ from index_page import IndexPage
 from tutorial_page import TutorialPage
 from levels_page import LevelsPage
 from help_page import HelpPage
+from tutorial_db import Session
 
 class MainWindow(QMainWindow):
     navigateToPage = pyqtSignal(str)
@@ -19,7 +20,7 @@ class MainWindow(QMainWindow):
 
         # App window title and icon
         self.setWindowTitle("XSSify")
-        icon_path = "/home/mario/Project/XSSify/XSSify/icons/bug.png"
+        icon_path = "/home/mario/Project/SECURIX/XSSify/XSSify/icons/bug.png"
         self.setWindowIcon(QIcon(icon_path))
 
         # Setting default font
@@ -36,7 +37,8 @@ class MainWindow(QMainWindow):
         # Create instances of pages
         self.welcome_page = WelcomePage()
         self.index_page = IndexPage()
-        self.tutorial_page = TutorialPage()
+        session = Session()
+        self.tutorial_page = TutorialPage(session)
         self.levels_page = LevelsPage()
         self.help_page = HelpPage()
 
@@ -78,7 +80,5 @@ class MainWindow(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     widget = MainWindow()
-    widget.setMinimumSize(1000, 800)
-    widget.show()
-    widget.center_window()
+    widget.showMaximized()
     sys.exit(app.exec())
