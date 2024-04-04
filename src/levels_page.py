@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QPushButton, QLabel, QLineEdit, QMessageBox, QRadioButton
+from PyQt6.QtWidgets import QMainWindow, QVBoxLayout, QHBoxLayout, QWidget, QPushButton, QLabel, QLineEdit, QMessageBox, QRadioButton
 from firebase_level import get_data_from_firestore
 from PyQt6.QtCore import pyqtSignal
 
@@ -10,7 +10,7 @@ class LevelsPage(QMainWindow):
         self.setWindowTitle("Levels")
         self.setGeometry(100, 100, 600, 400)
 
-        # Setting necessary variablesz
+        # Setting necessary variables
         self.question_index = 0
         self.score = 0
         self.questions = []
@@ -30,21 +30,45 @@ class LevelsPage(QMainWindow):
         self.layout = QVBoxLayout()
         self.central_widget.setLayout(self.layout)
 
+        top_layout = QHBoxLayout()
+        self.layout.addLayout(top_layout)
+
+        self.hamburger_menu_button = QPushButton("☰")
+        self.hamburger_menu_button.setStyleSheet("""
+            QPushButton {
+                font-size: 25px;
+                background-color: rgba(0, 0, 0, 0);
+                color: #2DD096;
+                padding: 2px 25px;
+                border-radius: 5px;
+            }
+            
+            QPushButton:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+            
+            QPushButton:pressed {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+        """)
+        self.hamburger_menu_button.clicked.connect(self.emit_return_to_index_signal)
+        top_layout.addWidget(self.hamburger_menu_button)
+
+        # Add a spacer to push the hamburger menu button to the left
+        top_layout.addStretch()
+
         self.label_question = QLabel()
         self.layout.addWidget(self.label_question)
 
-        # Radio buttons for MCQs
         self.radio_buttons = []
         for i in range(4):
             radio_button = QRadioButton()
             self.radio_buttons.append(radio_button)
             self.layout.addWidget(radio_button)
 
-        # Line edit for typed ans
         self.answer_field = QLineEdit()
         self.layout.addWidget(self.answer_field)
 
-        # Button to submit ans
         self.btn_submit = QPushButton("Submit")
         self.btn_submit.clicked.connect(self.next_question)
         self.layout.addWidget(self.btn_submit)

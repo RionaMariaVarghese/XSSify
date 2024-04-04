@@ -152,24 +152,24 @@ class TutorialPage(QWidget):
     def emit_return_to_index_signal(self):
         self.returnToIndexSignal.emit()
 
-class MainWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle("Tutorial Page")
+# class MainWindow(QMainWindow):
+#     def __init__(self):
+#         super().__init__()
+#         self.setWindowTitle("Tutorial Page")
 
-        session = Session()
+#         session = Session()
 
-        tutorial_page = TutorialPage(session)
-        tutorial_page.returnToIndexSignal.connect(self.return_to_index_page)
+#         tutorial_page = TutorialPage(session)
+#         tutorial_page.returnToIndexSignal.connect(self.return_to_index_page)
 
-        self.setCentralWidget(tutorial_page)
-        self.showMaximized()
+#         self.setCentralWidget(tutorial_page)
+#         self.showMaximized()
 
-    def return_to_index_page(self):
-        print("Returning to index page")
+#     def return_to_index_page(self):
+#         print("Returning to index page")
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
-    sys.exit(app.exec())
+# if __name__ == "__main__":
+#     app = QApplication(sys.argv)
+#     window = MainWindow()
+#     window.show()
+#     sys.exit(app.exec())
