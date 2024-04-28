@@ -1,6 +1,8 @@
-from PyQt6.QtWidgets import QMainWindow, QVBoxLayout, QHBoxLayout, QWidget, QPushButton, QLabel, QLineEdit, QMessageBox, QRadioButton
+import sys
+from PyQt6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QHBoxLayout, QWidget, QPushButton, QLabel, QLineEdit, QMessageBox, QRadioButton
 from firebase_level import get_data_from_firestore
-from PyQt6.QtCore import pyqtSignal
+from PyQt6.QtCore import pyqtSignal, Qt
+from PyQt6.QtGui import QFont
 
 class LevelsPage(QMainWindow):
     returnToIndexSignal = pyqtSignal(str)
@@ -24,6 +26,7 @@ class LevelsPage(QMainWindow):
         self.questions = get_data_from_firestore()
 
     def setup_ui(self):
+        font = QFont("JetBrains Mono", 15)
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
 
@@ -57,24 +60,41 @@ class LevelsPage(QMainWindow):
         # Add a spacer to push the hamburger menu button to the left
         top_layout.addStretch()
 
+        options_layout = QVBoxLayout()
+        options_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        options_wrapper_layout = QHBoxLayout()
+        options_wrapper_layout.addStretch()
+        options_wrapper_layout.addLayout(options_layout)
+        options_wrapper_layout.addStretch()
+        self.layout.addLayout(options_wrapper_layout)
+        
+        options_layout.addStretch()
+
         self.label_question = QLabel()
-        self.layout.addWidget(self.label_question)
+        self.label_question.setFont(font)
+        options_layout.addWidget(self.label_question, alignment=Qt.AlignmentFlag.AlignCenter)
 
         self.radio_buttons = []
         for i in range(4):
             radio_button = QRadioButton()
             self.radio_buttons.append(radio_button)
-            self.layout.addWidget(radio_button)
+            radio_button.setFont(font)
+            options_layout.addWidget(radio_button, alignment=Qt.AlignmentFlag.AlignLeft)
 
         self.answer_field = QLineEdit()
-        self.layout.addWidget(self.answer_field)
+        self.answer_field.setFont(font)
+        options_layout.addWidget(self.answer_field)
+
+        options_layout.addStretch()
 
         self.btn_submit = QPushButton("Submit")
+        self.btn_submit.setFont(font)
         self.btn_submit.clicked.connect(self.next_question)
         self.layout.addWidget(self.btn_submit)
 
         # Button to return to Index after questions finish
         self.btn_return = QPushButton("Return to Index Page")
+        self.btn_return.setFont(font)
         self.btn_return.clicked.connect(self.emit_return_to_index_signal)
         self.btn_return.hide()
         self.layout.addWidget(self.btn_return)
@@ -133,3 +153,18 @@ class LevelsPage(QMainWindow):
     
     def emit_return_to_index_signal(self):
         self.returnToIndexSignal.emit("")
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Main Window")
+        self.setGeometry(100, 100, 800, 600)
+
+        levels_page = LevelsPage()
+        self.setCentralWidget(levels_page)
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec())
