@@ -18,7 +18,6 @@ class LevelsPage(QMainWindow):
         self.questions = []
 
         self.load_questions()
-
         self.setup_ui()
         self.show_question()
 
@@ -77,6 +76,7 @@ class LevelsPage(QMainWindow):
         self.radio_buttons = []
         for i in range(4):
             radio_button = QRadioButton()
+            radio_button.setChecked(False)
             self.radio_buttons.append(radio_button)
             radio_button.setFont(font)
             options_layout.addWidget(radio_button, alignment=Qt.AlignmentFlag.AlignLeft)
@@ -98,6 +98,19 @@ class LevelsPage(QMainWindow):
         self.btn_return.clicked.connect(self.emit_return_to_index_signal)
         self.btn_return.hide()
         self.layout.addWidget(self.btn_return)
+
+
+    def reset(self):
+        self.question_index = 0
+        self.score = 0
+        self.btn_submit.show()
+        self.btn_return.hide()
+        for radio_button in self.radio_buttons:
+            radio_button.setChecked(False)
+        self.answer_field.clear()
+        self.load_questions()
+        self.setup_ui()
+        self.show_question()
 
     def show_question(self):
         if self.question_index < len(self.questions):
@@ -152,6 +165,7 @@ class LevelsPage(QMainWindow):
         self.btn_submit.hide()
     
     def emit_return_to_index_signal(self):
+        self.reset()
         self.returnToIndexSignal.emit("")
 
 class MainWindow(QMainWindow):
