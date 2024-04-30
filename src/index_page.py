@@ -10,7 +10,7 @@ class IndexPage(QWidget):
         self.setup_layout()
     
     def setup_layout(self):
-        chapters_list = ["TUTORIAL", "LEVELS", "HELP"]
+        chapters_list = ["TUTORIAL", "LEVELS", "HELP", "ABOUT"]
         path = "/home/mario/Project/SECURIX/XSSify/XSSify/icons/right_arrow.png"
 
         vlayout = QVBoxLayout(self)
@@ -42,7 +42,6 @@ class IndexPage(QWidget):
                 }
                 """
             )
-
 
             hlayout = QHBoxLayout()
             hlayout.addWidget(arrow_icon)
