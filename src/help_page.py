@@ -58,17 +58,17 @@ class HelpPage(QWidget):
 
         self.add_heading("TUTORIALS:", inner_layout, font_size=30, alignment=Qt.AlignmentFlag.AlignCenter)
         self.add_paragraph("""
-            This section is where you will be learning the concepts of XSS and how to implement them. You will be awarded coins on completing each tutorial and can then use it to access Hints in the <span>Levels</span> Section. Your progress will also be tracked.
+            This section is where you will be learning the concepts of XSS and how to implement them. It is recommended that you go through this section before attending the <span>Levels</span> Section. This section also helps you familiarize with a few XSS related tools as well.
         """, inner_layout)
 
         self.add_heading("LEVELS:", inner_layout, font_size=30, alignment=Qt.AlignmentFlag.AlignCenter)
         self.add_paragraph("""
-            This section is designed to test the knowledge you have gained from the <span>Tutorials</span>. You will be given coins and badges on completing each level. One can access this section only after completing the <span>Tutorials</span> Section. You can utilize the hints using the coins you have previously earned.
+            This section is designed to test the knowledge you have gained from the <span>Tutorials</span>. Recommended to attend the <span>Tutorials</span> Section before this. Your score will be resulted at last. Can attend multiple times. Going back resets your progress. Make sure you have marked/entered the correct answer before submitting the same and moving to the next question.
         """, inner_layout)
 
-        self.add_heading("PROFILE:", inner_layout, font_size=30, alignment=Qt.AlignmentFlag.AlignCenter)
+        self.add_heading("ABOUT:", inner_layout, font_size=30, alignment=Qt.AlignmentFlag.AlignCenter)
         self.add_paragraph("""
-            This section is used to track your progress, badges, and coins earned.
+            This section provides a description about the app.
         """, inner_layout)
 
     def add_heading(self, text, parent_layout, font_size, alignment):
@@ -84,7 +84,7 @@ class HelpPage(QWidget):
         paragraph_label.setTextFormat(Qt.TextFormat.RichText)
         paragraph_label.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
 
-        for word in ["Tutorials", "Levels", "Tutorials", "Levels"]:
+        for word in ["Tutorials", "Levels"]:
             text = text.replace(word, f"<em>{word}</em>")
 
         paragraph_label.setText(text)

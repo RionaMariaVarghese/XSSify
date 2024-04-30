@@ -173,9 +173,8 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("Main Window")
         self.setGeometry(100, 100, 800, 600)
-
-        levels_page = LevelsPage()
-        self.setCentralWidget(levels_page)
+        self.levels_page = LevelsPage()
+        self.setCentralWidget(self.levels_page)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
