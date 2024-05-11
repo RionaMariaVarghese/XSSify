@@ -1,6 +1,5 @@
 import sys
 from PyQt6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QHBoxLayout, QWidget, QPushButton, QLabel, QLineEdit, QMessageBox, QRadioButton
-# from firebase_level import get_data_from_firestore
 from PyQt6.QtCore import pyqtSignal, Qt
 from PyQt6.QtGui import QFont
 from level_db import Session, LevelPageContent
@@ -19,8 +18,80 @@ class LevelsPage(QMainWindow):
         self.questions = []
 
         self.load_questions()
-        self.setup_ui()
-        self.show_question()
+        self.setup_intro_ui()
+
+    def setup_intro_ui(self):
+        font = QFont("JetBrains Mono", 15)
+        layout = QVBoxLayout()
+
+        label_intro = QLabel("Welcome to the Levels!\n\nRules and Conditions:")
+        label_intro.setFont(font)
+        label_intro.setStyleSheet("letter-spacing: 2px; font-weight: bold; color: #2DD096;")
+        label_intro.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(label_intro)
+
+        label_rules = QLabel("- It is reccommended to go through the Tutorial Sections before attending this section.")
+        label_rules.setFont(font)
+        layout.addWidget(label_rules)
+
+        label_rules = QLabel("- This quiz can be taken any number of times.")
+        label_rules.setFont(font)
+        layout.addWidget(label_rules)
+
+        label_rules = QLabel("- Each question will have multiple-choice options or require user input.")
+        label_rules.setFont(font)
+        layout.addWidget(label_rules)
+
+        label_rules = QLabel("- For multiple-choice questions, select the correct option.")
+        label_rules.setFont(font)
+        layout.addWidget(label_rules)
+
+        label_rules = QLabel("- For questions requiring user input, type your answer in the provided field.")
+        label_rules.setFont(font)
+        layout.addWidget(label_rules)
+
+        label_rules = QLabel("- Please ensure that the answer typed or marked is the one that you had in mind before submitting the same.")
+        label_rules.setFont(font)
+        layout.addWidget(label_rules)
+
+        label_rules = QLabel("- Pratice till you get the perfect score.")
+        label_rules.setFont(font)
+        layout.addWidget(label_rules)
+
+        label_rules = QLabel("- Click the 'Start Levels' button to begin.")
+        label_rules.setFont(font)
+        layout.addWidget(label_rules)
+
+        btn_start = QPushButton("Start Levels")
+        btn_start.setFont(font)
+        btn_start.setStyleSheet("""
+                QPushButton {
+                    font-size: 15px;
+                    letter-spacing: 5px;
+                    font-weight: bold;
+                    background-color: rgba(0, 0, 0, 0);
+                    border: 1px solid #FFFFFF;
+                    color: #2DD096;
+                    padding: 10px 20px;
+                    border-radius: 10px;
+                    margin: 6px;
+                }
+                
+                QPushButton:hover {
+                    background-color: rgba(255, 255, 255, 0.1);
+                }
+                
+                QPushButton:pressed {
+                    background-color: rgba(255, 255, 255, 0.2);
+                }
+                """
+        )
+        btn_start.clicked.connect(self.show_question)
+        layout.addWidget(btn_start, alignment=Qt.AlignmentFlag.AlignCenter)
+
+        central_widget = QWidget()
+        central_widget.setLayout(layout)
+        self.setCentralWidget(central_widget)
 
     def load_questions(self):
         session = Session()
@@ -93,12 +164,56 @@ class LevelsPage(QMainWindow):
 
         self.btn_submit = QPushButton("Submit")
         self.btn_submit.setFont(font)
+        self.btn_submit.setStyleSheet("""
+                QPushButton {
+                    font-size: 20px;
+                    letter-spacing: 10px;
+                    font-weight: bold;
+                    background-color: rgba(0, 0, 0, 0);
+                    border: 1px solid #FFFFFF;
+                    color: #2DD096;
+                    padding: 10px 20px;
+                    border-radius: 10px;
+                    margin: 6px;
+                }
+                
+                QPushButton:hover {
+                    background-color: rgba(255, 255, 255, 0.1);
+                }
+                
+                QPushButton:pressed {
+                    background-color: rgba(255, 255, 255, 0.2);
+                }
+                """
+        )
         self.btn_submit.clicked.connect(self.next_question)
         self.layout.addWidget(self.btn_submit)
 
         # Button to return to Index after questions finish
         self.btn_return = QPushButton("Return to Index Page")
         self.btn_return.setFont(font)
+        self.btn_return.setStyleSheet("""
+                QPushButton {
+                    font-size: 20px;
+                    letter-spacing: 10px;
+                    font-weight: bold;
+                    background-color: rgba(0, 0, 0, 0);
+                    border: 1px solid #FFFFFF;
+                    color: #2DD096;
+                    padding: 10px 20px;
+                    border-radius: 10px;
+                    margin: 6px;
+                }
+                
+                QPushButton:hover {
+                    background-color: rgba(255, 255, 255, 0.1);
+                }
+                
+                QPushButton:pressed {
+                    background-color: rgba(255, 255, 255, 0.2);
+                }
+                """
+        )
         self.btn_return.clicked.connect(self.emit_return_to_index_signal)
         self.btn_return.hide()
         self.layout.addWidget(self.btn_return)
@@ -117,6 +232,8 @@ class LevelsPage(QMainWindow):
         self.show_question()
 
     def show_question(self):
+        self.centralWidget().deleteLater()
+        self.setup_ui()
         if self.question_index < len(self.questions):
             question_data = self.questions[self.question_index]
             question = question_data.question
