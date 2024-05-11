@@ -1,8 +1,9 @@
 import sys
 from PyQt6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QHBoxLayout, QWidget, QPushButton, QLabel, QLineEdit, QMessageBox, QRadioButton
-from firebase_level import get_data_from_firestore
+# from firebase_level import get_data_from_firestore
 from PyQt6.QtCore import pyqtSignal, Qt
 from PyQt6.QtGui import QFont
+from level_db import Session, LevelPageContent
 
 class LevelsPage(QMainWindow):
     returnToIndexSignal = pyqtSignal(str)
@@ -22,7 +23,10 @@ class LevelsPage(QMainWindow):
         self.show_question()
 
     def load_questions(self):
-        self.questions = get_data_from_firestore()
+        session = Session()
+        self.questions = session.query(LevelPageContent).all()
+        session.close()
+        # self.questions = get_data_from_firestore()
 
     def setup_ui(self):
         font = QFont("JetBrains Mono", 15)
@@ -115,22 +119,32 @@ class LevelsPage(QMainWindow):
     def show_question(self):
         if self.question_index < len(self.questions):
             question_data = self.questions[self.question_index]
-            self.label_question.setText(question_data["question"])
+            question = question_data.question
+            options = [question_data.option1, question_data.option2, question_data.option3, question_data.option4]
+            answer = question_data.answer
+            requires_input = question_data.requires_input
+
+            self.label_question.setText(question)
             self.answer_field.clear()
 
-            if "options" in question_data:
-                options = question_data["options"]
-                for i, option in enumerate(options):
-                    self.radio_buttons[i].setText(option)
-                self.answer_field.hide()
-                for radio_button in self.radio_buttons:
-                    radio_button.show()
-            else:
+            if requires_input:
                 self.answer_field.show()
                 for radio_button in self.radio_buttons:
                     radio_button.hide()
+            else:
+                if options:
+                    for i, option in enumerate(options):
+                        self.radio_buttons[i].setText(option)
+                    self.answer_field.hide()
+                    for radio_button in self.radio_buttons:
+                        radio_button.show()
+                else:
+                    self.answer_field.show()
+                    for radio_button in self.radio_buttons:
+                        radio_button.hide()
         else:
             self.show_result()
+
 
     def next_question(self):
         typed_answer = self.answer_field.text().strip()
@@ -141,7 +155,7 @@ class LevelsPage(QMainWindow):
                 selected_option_text = self.radio_buttons[i].text().strip().lower()
                 break
 
-        correct_answer = self.questions[self.question_index]["answer"].strip().lower()
+        correct_answer = self.questions[self.question_index].answer.strip().lower()
 
         if selected_option_text is not None:
             if selected_option_text == correct_answer:
