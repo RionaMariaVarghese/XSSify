@@ -1,7 +1,7 @@
 from firebase_admin import credentials, firestore, initialize_app
 
 # Initialize Firebase Admin SDK
-cred = credentials.Certificate("/home/mario/Project/SECURIX/XSSify/XSSify/xssify-firebase-adminsdk-twwbd-16832c5e50.json")
+cred = credentials.Certificate("/home/mario/Project/SECURIX/XSSify/xssify-firebase-adminsdk-twwbd-16832c5e50.json")
 firebase_app = initialize_app(cred)
 db = firestore.client()
 
