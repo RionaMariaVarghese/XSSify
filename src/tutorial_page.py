@@ -98,6 +98,28 @@ class TutorialPage(QWidget):
             self.add_chapter_button(chapter_title, inner_layout)
 
         btn_cont = QPushButton("Continue")
+        btn_cont.setStyleSheet("""
+                QPushButton {
+                    font-size: 20px;
+                    letter-spacing: 10px;
+                    font-weight: bold;
+                    background-color: rgba(0, 0, 0, 0);
+                    border: 1px solid #FFFFFF;
+                    color: #2DD096;
+                    padding: 10px 20px;
+                    border-radius: 10px;
+                    margin: 6px;
+                }
+                
+                QPushButton:hover {
+                    background-color: rgba(255, 255, 255, 0.1);
+                }
+                
+                QPushButton:pressed {
+                    background-color: rgba(255, 255, 255, 0.2);
+                }
+                """
+        )
         btn_cont.clicked.connect(self.show_current_chapter)
         self.bottom_layout.addWidget(btn_cont)
 
@@ -198,10 +220,54 @@ class TutorialPage(QWidget):
         self.clear_layout(self.bottom_layout)
 
         btn_prev = QPushButton("Previous")
+        btn_prev.setStyleSheet("""
+                QPushButton {
+                    font-size: 20px;
+                    letter-spacing: 10px;
+                    font-weight: bold;
+                    background-color: rgba(0, 0, 0, 0);
+                    border: 1px solid #FFFFFF;
+                    color: #2DD096;
+                    padding: 10px 20px;
+                    border-radius: 10px;
+                    margin: 6px;
+                }
+                
+                QPushButton:hover {
+                    background-color: rgba(255, 255, 255, 0.1);
+                }
+                
+                QPushButton:pressed {
+                    background-color: rgba(255, 255, 255, 0.2);
+                }
+                """
+        )
         btn_prev.clicked.connect(self.show_previous_chapter)
         self.bottom_layout.addWidget(btn_prev)
 
         btn_next = QPushButton("Next")
+        btn_next.setStyleSheet("""
+                QPushButton {
+                    font-size: 20px;
+                    letter-spacing: 10px;
+                    font-weight: bold;
+                    background-color: rgba(0, 0, 0, 0);
+                    border: 1px solid #FFFFFF;
+                    color: #2DD096;
+                    padding: 10px 20px;
+                    border-radius: 10px;
+                    margin: 6px;
+                }
+                
+                QPushButton:hover {
+                    background-color: rgba(255, 255, 255, 0.1);
+                }
+                
+                QPushButton:pressed {
+                    background-color: rgba(255, 255, 255, 0.2);
+                }
+                """
+        )
         btn_next.clicked.connect(self.show_next_chapter)
         self.bottom_layout.addWidget(btn_next)
 
