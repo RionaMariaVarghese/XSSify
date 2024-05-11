@@ -238,7 +238,6 @@ class LevelsPage(QMainWindow):
             question_data = self.questions[self.question_index]
             question = question_data.question
             options = [question_data.option1, question_data.option2, question_data.option3, question_data.option4]
-            answer = question_data.answer
             requires_input = question_data.requires_input
 
             self.label_question.setText(question)
@@ -260,6 +259,9 @@ class LevelsPage(QMainWindow):
                     for radio_button in self.radio_buttons:
                         radio_button.hide()
         else:
+            for radio_button in self.radio_buttons:
+                radio_button.hide()
+            self.answer_field.hide()
             self.show_result()
 
 
