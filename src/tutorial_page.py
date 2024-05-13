@@ -101,7 +101,7 @@ class TutorialPage(QWidget):
         btn_cont.setStyleSheet("""
                 QPushButton {
                     font-size: 20px;
-                    letter-spacing: 10px;
+                    letter-spacing: 5px;
                     font-weight: bold;
                     background-color: rgba(0, 0, 0, 0);
                     border: 1px solid #FFFFFF;
@@ -223,7 +223,7 @@ class TutorialPage(QWidget):
         btn_prev.setStyleSheet("""
                 QPushButton {
                     font-size: 20px;
-                    letter-spacing: 10px;
+                    letter-spacing: 6px;
                     font-weight: bold;
                     background-color: rgba(0, 0, 0, 0);
                     border: 1px solid #FFFFFF;
@@ -249,7 +249,7 @@ class TutorialPage(QWidget):
         btn_next.setStyleSheet("""
                 QPushButton {
                     font-size: 20px;
-                    letter-spacing: 10px;
+                    letter-spacing: 6px;
                     font-weight: bold;
                     background-color: rgba(0, 0, 0, 0);
                     border: 1px solid #FFFFFF;
