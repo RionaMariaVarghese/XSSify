@@ -11,7 +11,7 @@ class IndexPage(QWidget):
     
     def setup_layout(self):
         chapters_list = ["TUTORIAL", "LEVELS", "HELP", "ABOUT"]
-        path = "XSS/XSSify/icons/right_arrow.png"
+        path = "XSSify/icons/right_arrow.png"
 
         vlayout = QVBoxLayout(self)
         vlayout.setAlignment(Qt.AlignmentFlag.AlignCenter)
