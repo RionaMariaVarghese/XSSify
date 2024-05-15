@@ -15,7 +15,7 @@ content_entries = [
         requires_input=0
     ),
     LevelPageContent(
-        question='What is the primary goal of an XSS attack?',
+        question='What type of cross-site scripting (XSS) attack occurs when the injected script is reflected off the web server but originates from an external source, such as in a URL parameter?',
         option1='Reflected XSS',
         option2='DOM XSS',
         option3='Refracted XSS',
