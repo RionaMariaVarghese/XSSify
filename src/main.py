@@ -9,7 +9,8 @@ from levels_page import LevelsPage
 from help_page import HelpPage
 from about_page import AboutPage
 from tutorial_db import Session
-
+from tutorial_content import add_tutorial_content_to_database
+from level_content import add_level_content_to_database
 class MainWindow(QMainWindow):
     navigateToPage = pyqtSignal(str)
 
@@ -21,7 +22,7 @@ class MainWindow(QMainWindow):
 
         # App window title and icon
         self.setWindowTitle("XSSify")
-        icon_path = "XSSify/icons/bug.png"
+        icon_path = "/icons/bug.png"
         self.setWindowIcon(QIcon(icon_path))
 
         # Setting default font
@@ -84,6 +85,8 @@ class MainWindow(QMainWindow):
 
 # Main function
 if __name__ == "__main__":
+    add_tutorial_content_to_database()
+    add_level_content_to_database()
     app = QApplication(sys.argv)
     widget = MainWindow()
     widget.showMaximized()
