@@ -1,5 +1,5 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QScrollArea, QSizePolicy
+from PyQt6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QScrollArea, QSizePolicy
 from PyQt6.QtCore import pyqtSignal, Qt
 from tutorial_db import Session, TutorialPageContent
 
@@ -288,24 +288,3 @@ class TutorialPage(QWidget):
         self.resetPageSignal.emit()
         self.returnToIndexSignal.emit()
 
-# class MainWindow(QMainWindow):
-#     def __init__(self):
-#         super().__init__()
-#         self.setWindowTitle("Tutorial Page")
-
-#         session = Session()
-
-#         tutorial_page = TutorialPage(session)
-#         tutorial_page.returnToIndexSignal.connect(self.return_to_index_page)
-
-#         self.setCentralWidget(tutorial_page)
-#         self.showMaximized()
-
-#     def return_to_index_page(self):
-#         print("Returning to index page")
-
-# if __name__ == "__main__":
-#     app = QApplication(sys.argv)
-#     window = MainWindow()
-#     window.show()
-#     sys.exit(app.exec())
