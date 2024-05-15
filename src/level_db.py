@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker, declarative_base
 from sqlalchemy import Column, Integer, String
+import os
 
 Base = declarative_base()
 
@@ -16,7 +16,13 @@ class LevelPageContent(Base):
     answer = Column(String)
     requires_input = Column(Integer)
 
-engine = create_engine('sqlite:///level_content.db')
-Base.metadata.create_all(engine)
+current_dir = os.path.dirname(os.path.abspath(__file__))
+db_file_path = os.path.join(current_dir, 'level_content.db')
+
+if not os.path.exists(db_file_path):
+    engine = create_engine(f'sqlite:///{db_file_path}')
+    Base.metadata.create_all(engine)
+else:
+    engine = create_engine(f'sqlite:///{db_file_path}')
 
 Session = sessionmaker(bind=engine)

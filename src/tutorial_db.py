@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker, declarative_base
 from sqlalchemy import Column, Integer, String, Text
+import os
 
 Base = declarative_base()
 
@@ -11,7 +11,13 @@ class TutorialPageContent(Base):
     title = Column(String)
     content = Column(Text)
 
-engine = create_engine('sqlite:///tutorial_content.db')
-Base.metadata.create_all(engine)
+current_dir = os.path.dirname(os.path.abspath(__file__))
+db_file_path = os.path.join(current_dir, 'tutorial_content.db')
+
+if not os.path.exists(db_file_path):
+    engine = create_engine(f'sqlite:///{db_file_path}')
+    Base.metadata.create_all(engine)
+else:
+    engine = create_engine(f'sqlite:///{db_file_path}')
 
 Session = sessionmaker(bind=engine)
