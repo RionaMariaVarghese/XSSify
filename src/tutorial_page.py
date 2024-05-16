@@ -4,6 +4,8 @@ from PyQt6.QtCore import pyqtSignal, Qt
 from PyQt6.QtGui import QPixmap
 from tutorial_db import Session, TutorialPageContent
 
+basedir = os.path.dirname(__file__)
+
 class TutorialPage(QWidget):
     returnToIndexSignal = pyqtSignal()
     resetPageSignal = pyqtSignal()
@@ -192,17 +194,17 @@ class TutorialPage(QWidget):
 
                 if paragraph.startswith("IMAGE 1:"):
                     image_label = QLabel()
-                    pixmap = QPixmap("src/icons/vulnweb.png")
+                    pixmap = QPixmap(os.path.join(basedir, 'vulnweb.png'))
                     image_label.setPixmap(pixmap)
                     self.content_layout.addWidget(image_label)
                 elif paragraph.startswith("IMAGE 2:"):
                     image_label = QLabel()
-                    pixmap = QPixmap("src/icons/pwnxss.png")
+                    pixmap = QPixmap(os.path.join(basedir, 'pwnxss.png'))
                     image_label.setPixmap(pixmap)
                     self.content_layout.addWidget(image_label)
                 elif paragraph.startswith("IMAGE 3:"):
                     image_label = QLabel()
-                    pixmap = QPixmap("src/icons/cookie.png")
+                    pixmap = QPixmap(os.path.join(basedir, 'cookie.png'))
                     image_label.setPixmap(pixmap)
                     self.content_layout.addWidget(image_label)
 

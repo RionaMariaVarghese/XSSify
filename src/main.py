@@ -1,4 +1,4 @@
-import sys
+import sys,os
 from PyQt6.QtWidgets import QApplication, QMainWindow, QStackedWidget
 from PyQt6.QtCore import pyqtSignal
 from PyQt6.QtGui import QFont, QColor, QIcon
@@ -12,6 +12,9 @@ from tutorial_db import Session
 from tutorial_content import add_tutorial_content_to_database
 from level_content import add_level_content_to_database
 
+
+basedir = os.path.dirname(__file__)
+
 class MainWindow(QMainWindow):
     navigateToPage = pyqtSignal(str)
 
@@ -23,8 +26,7 @@ class MainWindow(QMainWindow):
 
         # App window title and icon
         self.setWindowTitle("XSSify")
-        icon_path = "src/icons/bug.png"
-        self.setWindowIcon(QIcon(icon_path))
+        self.setWindowIcon(QIcon(os.path.join(basedir, 'bug.png')))
 
         # Setting default font
         app_font = QFont("JetBrains Mono")
