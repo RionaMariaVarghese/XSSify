@@ -194,17 +194,17 @@ class TutorialPage(QWidget):
 
                 if paragraph.startswith("IMAGE 1:"):
                     image_label = QLabel()
-                    pixmap = QPixmap(os.path.join(basedir, 'icons/vulnweb.png'))
+                    pixmap = QPixmap(os.path.join(basedir, 'vulnweb.png'))
                     image_label.setPixmap(pixmap)
                     self.content_layout.addWidget(image_label)
                 elif paragraph.startswith("IMAGE 2:"):
                     image_label = QLabel()
-                    pixmap = QPixmap(os.path.join(basedir, 'icons/pwnxss.png'))
+                    pixmap = QPixmap(os.path.join(basedir, 'pwnxss.png'))
                     image_label.setPixmap(pixmap)
                     self.content_layout.addWidget(image_label)
                 elif paragraph.startswith("IMAGE 3:"):
                     image_label = QLabel()
-                    pixmap = QPixmap(os.path.join(basedir, 'icons/cookie.png'))
+                    pixmap = QPixmap(os.path.join(basedir, 'cookie.png'))
                     image_label.setPixmap(pixmap)
                     self.content_layout.addWidget(image_label)
 
