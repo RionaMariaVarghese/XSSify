@@ -1,4 +1,4 @@
-import sys
+import os
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QScrollArea, QSizePolicy
 from PyQt6.QtCore import pyqtSignal, Qt
 from PyQt6.QtGui import QPixmap
@@ -46,6 +46,13 @@ class TutorialPage(QWidget):
         self.setLayout(main_layout)
 
         self.show_initial_page()
+
+    def get_icon_path(self, icon_name):
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        icons_dir = os.path.join(current_dir, "..", "icons") 
+        icon_path = os.path.join(icons_dir, icon_name)
+        print(icon_path)
+        return icon_path
 
     def setup_index_button(self, layout):
         index_button = QPushButton("☰")
@@ -180,34 +187,34 @@ class TutorialPage(QWidget):
             heading = QLabel(tutorial_content.title)
             heading.setStyleSheet("font-size: 36px; color: #2DD096; font-weight: bold; text-decoration: underline;")
             heading.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
             self.content_layout.addWidget(heading)
-        content = tutorial_content.content.strip().split('\n\n')            
-        for idx, paragraph in enumerate(content):
-            paragraph_label = QLabel(paragraph)
-            paragraph_label.setStyleSheet("font-size: 24px; color: white; font-weight: regular; text-align: justify;")
-            paragraph_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
-            paragraph_label.setWordWrap(True)
-            self.content_layout.addWidget(paragraph_label)
 
-            if paragraph.startswith("IMAGE 1:"):
-                image_label = QLabel()
-                pixmap = QPixmap("XSS/XSSify/icons/vulnweb.png")
-                image_label.setPixmap(pixmap)
-                self.content_layout.addWidget(image_label)
-            if paragraph.startswith("IMAGE 2:"):
-                image_label = QLabel()
-                pixmap = QPixmap("XSS/XSSify/icons/pwnxss.png")
-                image_label.setPixmap(pixmap)
-                self.content_layout.addWidget(image_label)
-            if paragraph.startswith("IMAGE 3:"):
-                image_label = QLabel()
-                pixmap = QPixmap("XSS/XSSify/icons/cookie.png")
-                image_label.setPixmap(pixmap)
-                self.content_layout.addWidget(image_label)
+            content = tutorial_content.content.strip().split('\n\n')            
+            for idx, paragraph in enumerate(content):
+                paragraph_label = QLabel(paragraph)
+                paragraph_label.setStyleSheet("font-size: 24px; color: white; font-weight: regular; text-align: justify;")
+                paragraph_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
+                paragraph_label.setWordWrap(True)
+                self.content_layout.addWidget(paragraph_label)
 
+                if paragraph.startswith("IMAGE 1:"):
+                    image_label = QLabel()
+                    pixmap = QPixmap(self.get_icon_path("vulnweb.png"))
+                    image_label.setPixmap(pixmap)
+                    self.content_layout.addWidget(image_label)
+                elif paragraph.startswith("IMAGE 2:"):
+                    image_label = QLabel()
+                    pixmap = QPixmap(self.get_icon_path("pwnxss.png"))
+                    image_label.setPixmap(pixmap)
+                    self.content_layout.addWidget(image_label)
+                elif paragraph.startswith("IMAGE 3:"):
+                    image_label = QLabel()
+                    pixmap = QPixmap(self.get_icon_path("cookie.png"))
+                    image_label.setPixmap(pixmap)
+                    self.content_layout.addWidget(image_label)
 
         self.add_navigation_buttons()
+
 
     def fetch_tutorial_content(self, title):
         tutorial_content = self.session.query(TutorialPageContent).filter_by(title=title).first()
@@ -307,3 +314,4 @@ class TutorialPage(QWidget):
         self.resetPageSignal.emit()
         self.returnToIndexSignal.emit()
 
+    
