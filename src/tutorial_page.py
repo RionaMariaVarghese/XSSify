@@ -181,21 +181,33 @@ class TutorialPage(QWidget):
             heading.setStyleSheet("font-size: 36px; color: #2DD096; font-weight: bold; text-decoration: underline;")
             heading.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-            content = QLabel(tutorial_content.content)
-            content.setStyleSheet("font-size: 24px; color: white; font-weight: regular; text-align: justify;")
-            content.setAlignment(Qt.AlignmentFlag.AlignLeft)
-            content.setWordWrap(True)
-
             self.content_layout.addWidget(heading)
-            self.content_layout.addWidget(content)
+        content = tutorial_content.content.strip().split('\n\n')            
+        for idx, paragraph in enumerate(content):
+            paragraph_label = QLabel(paragraph)
+            paragraph_label.setStyleSheet("font-size: 24px; color: white; font-weight: regular; text-align: justify;")
+            paragraph_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
+            paragraph_label.setWordWrap(True)
+            self.content_layout.addWidget(paragraph_label)
 
-            if title == "PwnXSS":
+            if paragraph.startswith("IMAGE 1:"):
                 image_label = QLabel()
-                pixmap = QPixmap("XSS/XSSify/icons/bug.png")  
+                pixmap = QPixmap("XSS/XSSify/icons/vulnweb.png")
+                image_label.setPixmap(pixmap)
+                self.content_layout.addWidget(image_label)
+            if paragraph.startswith("IMAGE 2:"):
+                image_label = QLabel()
+                pixmap = QPixmap("XSS/XSSify/icons/pwnxss.png")
+                image_label.setPixmap(pixmap)
+                self.content_layout.addWidget(image_label)
+            if paragraph.startswith("IMAGE 3:"):
+                image_label = QLabel()
+                pixmap = QPixmap("XSS/XSSify/icons/cookie.png")
                 image_label.setPixmap(pixmap)
                 self.content_layout.addWidget(image_label)
 
-            self.add_navigation_buttons()
+
+        self.add_navigation_buttons()
 
     def fetch_tutorial_content(self, title):
         tutorial_content = self.session.query(TutorialPageContent).filter_by(title=title).first()
