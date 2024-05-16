@@ -1,6 +1,7 @@
 import sys
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QScrollArea, QSizePolicy
 from PyQt6.QtCore import pyqtSignal, Qt
+from PyQt6.QtGui import QPixmap
 from tutorial_db import Session, TutorialPageContent
 
 class TutorialPage(QWidget):
@@ -187,6 +188,12 @@ class TutorialPage(QWidget):
 
             self.content_layout.addWidget(heading)
             self.content_layout.addWidget(content)
+
+            if title == "PwnXSS":
+                image_label = QLabel()
+                pixmap = QPixmap("XSS/XSSify/icons/bug.png")  
+                image_label.setPixmap(pixmap)
+                self.content_layout.addWidget(image_label)
 
             self.add_navigation_buttons()
 

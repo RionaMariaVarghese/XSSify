@@ -23,7 +23,7 @@ class MainWindow(QMainWindow):
 
         # App window title and icon
         self.setWindowTitle("XSSify")
-        icon_path = "XSSify/icons/bug.png"
+        icon_path = "XSS/XSSify/icons/bug.png"
         self.setWindowIcon(QIcon(icon_path))
 
         # Setting default font
