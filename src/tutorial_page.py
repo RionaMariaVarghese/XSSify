@@ -47,13 +47,6 @@ class TutorialPage(QWidget):
 
         self.show_initial_page()
 
-    def get_icon_path(self, icon_name):
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        icons_dir = os.path.join(current_dir, "..", "icons") 
-        icon_path = os.path.join(icons_dir, icon_name)
-        print(icon_path)
-        return icon_path
-
     def setup_index_button(self, layout):
         index_button = QPushButton("☰")
         index_button.clicked.connect(self.emit_return_to_index_signal)
@@ -199,17 +192,17 @@ class TutorialPage(QWidget):
 
                 if paragraph.startswith("IMAGE 1:"):
                     image_label = QLabel()
-                    pixmap = QPixmap(self.get_icon_path("vulnweb.png"))
+                    pixmap = QPixmap("src/icons/vulnweb.png")
                     image_label.setPixmap(pixmap)
                     self.content_layout.addWidget(image_label)
                 elif paragraph.startswith("IMAGE 2:"):
                     image_label = QLabel()
-                    pixmap = QPixmap(self.get_icon_path("pwnxss.png"))
+                    pixmap = QPixmap("src/icons/pwnxss.png")
                     image_label.setPixmap(pixmap)
                     self.content_layout.addWidget(image_label)
                 elif paragraph.startswith("IMAGE 3:"):
                     image_label = QLabel()
-                    pixmap = QPixmap(self.get_icon_path("cookie.png"))
+                    pixmap = QPixmap("src/icons/cookie.png")
                     image_label.setPixmap(pixmap)
                     self.content_layout.addWidget(image_label)
 
