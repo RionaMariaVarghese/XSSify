@@ -26,7 +26,7 @@ class MainWindow(QMainWindow):
 
         # App window title and icon
         self.setWindowTitle("XSSify")
-        self.setWindowIcon(QIcon(os.path.join(basedir, 'bug.png')))
+        self.setWindowIcon(QIcon(os.path.join(basedir, 'icons/bug.png')))
 
         # Setting default font
         app_font = QFont("JetBrains Mono")
